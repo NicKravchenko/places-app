@@ -75,12 +75,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     justifyContent: "center",
     alignItems: "center",
-    borderColor: Colors.primary100,
+    backgroundColor: Colors.primary100,
     borderRadius: 4,
   },
   image: {
     width: "100%",
     height: "100%",
-    overflow: "hidden",
+    borderRadius: 4,
   },
 });
