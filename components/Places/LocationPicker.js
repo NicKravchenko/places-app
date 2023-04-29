@@ -13,9 +13,9 @@ import {
 import OutlinedButton from "../UI/OutlineButton";
 import { Colors } from "../../constants/colors";
 import { useEffect, useState } from "react";
-import { getMapPreview } from "../../util/location";
+import { getAdress, getMapPreview } from "../../util/location";
 
-function LocationPicker() {
+function LocationPicker({ onPickLocation }) {
   const [pickedLocation, setPickedLocation] = useState();
   const [locationPermissionInformation, requestPermission] =
     useForegroundPermissions();
@@ -32,6 +32,16 @@ function LocationPicker() {
       setPickedLocation(mapPickedLocation);
     }
   }, [route, isFocused]);
+
+  useEffect(() => {
+    async function handleLocation() {
+      if (pickedLocation) {
+        const address = await getAdress(pickedLocation.lat, pickedLocation.lng);
+        onPickLocation({ ...pickedLocation, address: address });
+      }
+    }
+    handleLocation();
+  }, [pickedLocation, onPickLocation]);
 
   async function verifyPermissions() {
     if (
@@ -75,7 +85,6 @@ function LocationPicker() {
   let locationPreview = <Text>No location picked yet</Text>;
 
   if (pickedLocation) {
-    print(pickedLocation);
     locationPreview = (
       <Image
         style={styles.image}
