@@ -79,7 +79,10 @@ function LocationPicker({ onPickLocation }) {
   }
 
   function pickOnMapHandler() {
-    navigation.navigate("Map");
+    navigation.navigate("Map", {
+      ...(pickedLocation ? { loc: pickedLocation } : {}),
+      mode: "pick",
+    });
   }
 
   let locationPreview = <Text>No location picked yet</Text>;
